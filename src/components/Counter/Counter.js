@@ -5,11 +5,11 @@ import { Value } from "./Value/Value";
 
 export class Counter extends React.Component {
     static defaultProps = {
-        unitialValue: 0,
+        initialValue: 0,
     };
 
     state = {
-        value: this.props.unitialValue,
+        value: this.props.initialValue,
     };
 
     handleIncreament = () => {
