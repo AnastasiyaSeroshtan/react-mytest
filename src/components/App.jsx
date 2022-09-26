@@ -6,6 +6,17 @@ import {Filter} from "./Filter/Filter";
 import React from "react";
 import { nanoid } from 'nanoid';
 import { ContactsList } from "./ContactsList/ContactsList";
+import { Modal } from "./Modal/Modal";
+import { ColorPicker } from "./ColorPicker/ColorPicker";
+
+const colorPickerOptions = [
+  { label: 'red', color: '#F44336' },
+  { label: 'green', color: '#4CAF50' },
+  { label: 'blue', color: '#2196F3' },
+  { label: 'grey', color: '#607D8B' },
+  { label: 'pink', color: '#E91E63' },
+  { label: 'indigo', color: '#3F51B5' },
+];
 
 
 
@@ -18,6 +29,7 @@ export class App extends React.Component {
       {id: nanoid(), name: "Masha", surname: "Seroshtan"}
     ],
     filter: '',
+    showModal: false,
   }
 
   deleteContact = (contactId) => {
@@ -47,10 +59,43 @@ export class App extends React.Component {
     )
   };
 
+  modalToggle = () => {
+    this.setState((state) => {
+      return (
+        {showModal: !state.showModal,}
+      )
+    })
+  };
+
+  componentDidMount(){
+    
+    const getContacts = localStorage.getItem('contacts');
+    const parseContacts = JSON.parse(getContacts);
+    if (parseContacts) {
+      this.setState({contacts: parseContacts});
+    }
+    
+  };
+
+  componentDidUpdate(prevProps, prevState) {
+    if (this.state.contacts !== prevState.contacts){
+      localStorage.setItem('contacts', JSON.stringify(this.state.contacts));
+    }
+  };
+
+
+
   render() {
     const visibleContacts = this.getVisibleContacts();
     return (
       <Box pt={3} pb={3} bg="muted">
+        <button type="button" onClick={this.modalToggle}>Open modal window</button>
+        {this.state.showModal && <Modal onClose={this.modalToggle}>
+          <h1>Hello world!</h1>
+          <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quisquam, velit! Dignissimos porro ea debitis dolorum alias adipisci est, et corrupti. Excepturi quod maxime labore natus ratione sapiente nemo nulla incidunt.</p>
+          <button type="button" onClick={this.modalToggle}>Close</button>
+        </Modal>}
+        <ColorPicker options={colorPickerOptions}/>
        <Counter initialValue={15}/>
        <Dropdown />
        <FormFull onGetFormData={this.getFormData}/>
