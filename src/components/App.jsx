@@ -8,6 +8,9 @@ import { nanoid } from 'nanoid';
 import { ContactsList } from "./ContactsList/ContactsList";
 import { Modal } from "./Modal/Modal";
 import { ColorPicker } from "./ColorPicker/ColorPicker";
+import { VideoList } from "./VideoPlayer/VideoList";
+import videos  from "./videos.json";
+import { VideoPlayer } from "./VideoPlayer/VideoPlayer";
 
 const colorPickerOptions = [
   { label: 'red', color: '#F44336' },
@@ -30,6 +33,7 @@ export class App extends React.Component {
     ],
     filter: '',
     showModal: false,
+    videoLink: null,
   }
 
   deleteContact = (contactId) => {
@@ -67,6 +71,8 @@ export class App extends React.Component {
     })
   };
 
+
+
   componentDidMount(){
     
     const getContacts = localStorage.getItem('contacts');
@@ -83,7 +89,11 @@ export class App extends React.Component {
     }
   };
 
-
+  VideoSelect = link => {
+    this.setState({
+      videoLink: link,
+    })
+  };
 
   render() {
     const visibleContacts = this.getVisibleContacts();
@@ -101,6 +111,10 @@ export class App extends React.Component {
        <FormFull onGetFormData={this.getFormData}/>
        <Filter value={this.state.filter} onChange={this.changeFilter}/>
        <ContactsList contacts={visibleContacts} onDeleteContact={this.deleteContact}/>
+       <Box border="normal" borderColor="red">
+          <VideoList videos={videos} onSelect={this.VideoSelect}/>
+          <VideoPlayer url={this.state.videoLink}/>
+       </Box>
       </Box>
      );
   }
