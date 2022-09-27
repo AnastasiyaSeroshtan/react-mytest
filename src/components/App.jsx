@@ -112,6 +112,7 @@ export class App extends React.Component {
        <Filter value={this.state.filter} onChange={this.changeFilter}/>
        <ContactsList contacts={visibleContacts} onDeleteContact={this.deleteContact}/>
        <Box border="normal" borderColor="red">
+          <h2>Selected video</h2>
           <VideoList videos={videos} onSelect={this.VideoSelect}/>
           <VideoPlayer url={this.state.videoLink}/>
        </Box>
