@@ -10,7 +10,10 @@ import { Modal } from "./Modal/Modal";
 import { ColorPicker } from "./ColorPicker/ColorPicker";
 import { VideoList } from "./VideoPlayer/VideoList";
 import videos  from "./videos.json";
+import publications from "./publications.json";
 import { VideoPlayer } from "./VideoPlayer/VideoPlayer";
+import { Reader } from "components/Reader/Reader";
+
 
 const colorPickerOptions = [
   { label: 'red', color: '#F44336' },
@@ -116,6 +119,8 @@ export class App extends React.Component {
           <VideoList videos={videos} onSelect={this.VideoSelect}/>
           <VideoPlayer url={this.state.videoLink}/>
        </Box>
+       <Reader items={publications}/>
+       
       </Box>
      );
   }
